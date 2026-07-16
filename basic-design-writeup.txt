@@ -1,0 +1,65 @@
+FiReplace
+Copyright 2026 - Noah Robertson
+
+Basic Idea:
+
+A Three Part Basic Appliance Control System:
+
+1. Main Control Block
+2. Remote Control
+3. Sensor(s)
+
+Specifics for this project:
+
+1. Main Control Block:
+
+The main control block will control a single Gas Powered Fireplace Appliance (*1), recieve commands from a custom remote control, be able to signal sensors to aquire temperature data for custom control.
+
+The control block will be powered by a standard USB-C power input for stable usage. 
+
+Basic functionality:
+- Uses temperature measured by a temperature sensor for a AUTO mode which will turn it on / off based on a set temperature
+- Uses the temperature measured to have a fail-safe if it rises to far even in "FORCE ON", it will lockout.
+- Is the place that points the other devices for connecting to
+- Recieves signals from the remote control for basic functionality
+- Issues a command to the sensor every X ms/s to read the temperature
+- There will be a switch on the device which allows for a "WiFi" mode, which enables the module to connect to a specified home server over MQTT for basic controls. If ON, allows the same control the remote has over wifi, if OFF will reset the device and strictly be controlled by remote control
+
+2. Remote Control
+
+The remote control for this project will send signal commands to the main control block:
+1. On/Off - Fireplace Enable/Disable
+2. Temperature Set - Sets the Temperature
+3. Farhenheit vs Celsius Switch - Changes the Displayed temperature format
+
+Device is powered by 2 AAA Standard batteries for easy replacability (*2)
+
+There will be a embedded display showing the temperature in the specified format.
+
+This device will need to be compliant with regulations aswell (can send signals only on button press)
+
+
+3. Sensor 
+
+This project will contain a singular off control block temperature sensor which will be positioned close to the fireplace. This sensor will recieve a command to read the temperature and return it whenever the main control block requests.
+
+The sensor will be powered by a CMOS battery, with intent to power the sensor for atleast a year if not longer and is replaceable.
+
+Whole Project Requirements:
+
+1. Power:
+All devices are going to need a lower power footprint with the remote control and sensor being able to last months if not years on the first set of batteries. The main control system will need to limit its power consumption, but not so much that it constrains responsiveness and functionality (which shouldn't be a issue in this simple system).
+
+2. Connection:
+All peripheral off board devices (remote control and sensors) need to be able to connect to the control block "out of the box" - they automatically match and connect to the control block when powered on.
+
+3. Firmware Design:
+Devices firmware will be designed with a less "specific focus for fireplace" and a more "general purpose" mind set so that it may be possible to make modifications to the hardware to add more outputs and more controls (could control something else besides a fireplace).
+
+4. Pricing:
+The hardware will try to stay as low-cost as possible. Only get what we need.
+
+The name really just comes from the project being used to replace a bad/broken existing fireplace control system.
+
+(*1) - This specific fireplace appliance is powered on by sending +5-6V for powering on and -5-6V for powering off
+(*2) - 2 AAA batteries in series can produce 3V, try and find a low power MCU / keep that in mind for hardware designs.
