@@ -1,0 +1,97 @@
+Command: /home/nhrob/.espressif/tools/python/v5.5.3/venv/bin/python3 /home/nhrob/.espressif/v5.5.3/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c3 --revision 3 --decode-panic backtrace /home/nhrob/FiReplace/software/fireplace-sensor/build/fireplace-sensor.elf /home/nhrob/FiReplace/software/fireplace-sensor/build/bootloader/bootloader.elf -m '/home/nhrob/.espressif/tools/python/v5.5.3/venv/bin/python3' '/home/nhrob/.espressif/v5.5.3/esp-idf/tools/idf.py' '-p' '/dev/ttyUSB0'
+[0;33m--- esp-idf-monitor 1.9.0 on /dev/ttyUSB0 115200[0m
+[0;33m--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0;33m
+--- Backtrace:
+
+[0m
+[0m--- 0x40383dbc: [0;33mesp_restart_noos[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/port/soc/esp32c3/system_internal.c[0m[0m:[1;31m115[0m
+[0m--- 0x403cbf10: [0;33mesp_bootloader_get_description[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_bootloader_format/esp_bootloader_desc.c[0m[0m:[1;31m39[0m
+[0m--- 0x403ce710: [0;33mesp_flash_encryption_enabled[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader_support/src/flash_encrypt.c[0m[0m:[1;31m89[0m
+[0m--- 0x403cbf1a: [0;33mcall_start_cpu0[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/bootloader/subproject/main/bootloader_start.c[0m[0m:[1;31m27[0m
+[0m--- 0x42009dba: [0;33mapp_main[0m[0m at [0;32m/home/nhrob/FiReplace/software/fireplace-sensor/main/fireplace-sensor.c[0m[0m:[1;31m26[0m
+[0m--- 0x40383c8b: [0;33m_esp_error_check_failed[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/esp_err.c[0m[0m:[1;31m49[0m
+[0;33m--- Stack dump detected[0m
+[0m--- 0x40383cd6: [0;33mpanic_abort[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/panic.c[0m[0m:[1;31m491[0m
+[0m--- 0x40383c94: [0;33mesp_vApplicationTickHook[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/esp_system/freertos_hooks.c[0m[0m:[1;31m31[0m
+[0m--- 0x40380001: [0;33m_vector_table[0m[0m at [0;32m/home/nhrob/.espressif/v5.5.3/esp-idf/components/riscv/vectors_intc.S[0m[0m:[1;31m54[0m
+[0m

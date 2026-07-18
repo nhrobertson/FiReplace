@@ -1,0 +1,2 @@
+source /home/nhrob/FiReplace/software/fireplace-sensor/build/bootloader/gdbinit/symbols
+source /home/nhrob/FiReplace/software/fireplace-sensor/build/bootloader/gdbinit/connect

@@ -1,0 +1,5 @@
+This sensor does not need advanced firmware, its simple even look is:
+
+RTC timer which wakes device ever X time, powers on the temperature sensor, gets a reading, sends the reading to the main block.
+
+

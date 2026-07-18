@@ -1,0 +1,15 @@
+Command: ninja all
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- Building ESP-IDF components for target esp32c3
+NOTICE: Processing 4 dependencies:
+NOTICE: [1/4] esp-idf-lib/esp_idf_lib_helpers (1.4.0)
+NOTICE: [2/4] esp-idf-lib/i2cdev (2.1.2)
+NOTICE: [3/4] esp-idf-lib/sht4x (1.0.7)
+NOTICE: [4/4] idf (5.5.3)
+-- i2cdev: ESP-IDF v5.5 detected, using new i2c_master driver
+-- i2cdev: Compiling with new I2C master driver (i2cdev.c)
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5 SoCs
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+/home/nhrob/.espressif/tools/cmake/3.30.2/bin/cmake --regenerate-during-build -S/home/nhrob/FiReplace/software/fireplace-sensor -B/home/nhrob/FiReplace/software/fireplace-sensor/build
