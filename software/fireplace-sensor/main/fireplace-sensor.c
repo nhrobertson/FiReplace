@@ -34,6 +34,8 @@ void app_main(void)
     ESP_LOGI(TAG, "temperature: %.3f, humitidy: %.3f", temperature, humitidy);
     
     //TODO: Send uplink
+    
+    
     esp_deep_sleep_start();
   }
 }

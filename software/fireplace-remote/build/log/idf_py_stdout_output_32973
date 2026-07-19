@@ -1,0 +1,31 @@
+Command: ninja all
+[1/11] Performing build step for 'bootloader'
+[1/1] cd /home/nhrob/FiReplace/software/fireplace-remote/build/bootloader/esp-idf/esptool_py && /home/nhrob/.espressif/tools/python/v5.5.3/venv/bin/python3 /home/nhrob/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/nhrob/FiReplace/software/fireplace-remote/build/bootloader/bootloader.bin
+Bootloader binary size 0x51e0 bytes. 0x2e20 bytes (36%) free.
+[2/11] No install step for 'bootloader'
+[3/11] Completed 'bootloader'
+[4/11] Building C object esp-idf/io/CMakeFiles/__idf_io.dir/io.c.obj
+[5/11] Linking C static library esp-idf/io/libio.a
+[6/11] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/fireplace-remote.c.obj
+In file included from /home/nhrob/.espressif/v5.5.3/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h:63,
+                 from /home/nhrob/.espressif/v5.5.3/esp-idf/components/driver/i2c/include/driver/i2c.h:17,
+                 from /home/nhrob/FiReplace/software/fireplace-remote/managed_components/espressif__ssd1306/include/ssd1306.h:19,
+                 from /home/nhrob/FiReplace/software/fireplace-remote/main/fireplace-remote.c:6:
+/home/nhrob/.espressif/v5.5.3/esp-idf/components/freertos/config/include/freertos/FreeRTOSConfig.h:272:9: warning: "configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES" redefined
+  272 | #define configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES    CONFIG_FREERTOS_USE_LIST_DATA_INTEGRITY_CHECK_BYTES
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/nhrob/FiReplace/software/fireplace-remote/main/fireplace-remote.c:5:
+/home/nhrob/.espressif/v5.5.3/esp-idf/components/freertos/FreeRTOS-Kernel/include/freertos/projdefs.h:73:13: note: this is the location of the previous definition
+   73 |     #define configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES    0
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[7/11] Linking C static library esp-idf/main/libmain.a
+[8/11] Generating esp-idf/esp_system/ld/sections.ld
+[9/11] Linking CXX executable fireplace-remote.elf
+[10/11] Generating binary image from built executable
+esptool.py v4.12.dev1
+Creating esp32c3 image...
+Merged 2 ELF sections
+Successfully created esp32c3 image.
+Generated /home/nhrob/FiReplace/software/fireplace-remote/build/fireplace-remote.bin
+[11/11] cd /home/nhrob/FiReplace/software/fireplace-remote/build/esp-idf/esptool_py && /home/nhrob/.espressif/tools/python/v5.5.3/venv/bin/python3 /home/nhrob/.espressif/v5.5.3/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/nhrob/FiReplace/software/fireplace-remote/build/partition_table/partition-table.bin /home/nhrob/FiReplace/software/fireplace-remote/build/fireplace-remote.bin
+fireplace-remote.bin binary size 0x2ad30 bytes. Smallest app partition is 0x100000 bytes. 0xd52d0 bytes (83%) free.

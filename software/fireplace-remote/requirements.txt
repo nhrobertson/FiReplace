@@ -1,0 +1,8 @@
+4 Buttons:
+
+1. On/Off
+2. Temp Up
+3. Temp Down
+4. Farenheit vs Celsius display
+
+A SSD1306 OLED display showing the set temperature in the specified format

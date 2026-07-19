@@ -1,0 +1,1 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/home/nhrob/.espressif/tools/python/v5.5.3/venv/bin/python3 -DESP_PLATFORM=1 -DIDF_TARGET=esp32c3 -DCCACHE_ENABLE=0 /home/nhrob/FiReplace/software/fireplace-remote

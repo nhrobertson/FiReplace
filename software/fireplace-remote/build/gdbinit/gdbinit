@@ -1,0 +1,2 @@
+source /home/nhrob/FiReplace/software/fireplace-remote/build/gdbinit/symbols
+source /home/nhrob/FiReplace/software/fireplace-remote/build/gdbinit/connect

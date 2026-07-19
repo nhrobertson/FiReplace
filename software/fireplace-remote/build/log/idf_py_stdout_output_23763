@@ -1,0 +1,11 @@
+Command: ninja all
+[0/1] Re-running CMake...
+-- Minimal build - OFF
+-- Building ESP-IDF components for target esp32c3
+NOTICE: Processing 2 dependencies:
+NOTICE: [1/2] espressif/ssd1306 (1.0.5~1)
+NOTICE: [2/2] idf (5.5.3)
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5 SoCs
+-- Configuring incomplete, errors occurred!
+FAILED: build.ninja 
+/home/nhrob/.espressif/tools/cmake/3.30.2/bin/cmake --regenerate-during-build -S/home/nhrob/FiReplace/software/fireplace-remote -B/home/nhrob/FiReplace/software/fireplace-remote/build
