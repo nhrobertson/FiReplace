@@ -6,6 +6,7 @@
 #include "ssd1306.h"
 #include "esp_sleep.h"
 #include "esp_timer.h"
+#include "esp_now.h"
 #include "io.h"
 
 #define STATE_BTN_GPIO        GPIO_NUM_0
@@ -31,14 +32,23 @@ enum TEMP_FORMAT {
 
 void app_main(void)
 {
+  //Static Variables
   static int set_temp = 72; //Farenheit default
   static enum TEMP_FORMAT temp_format = FARENHEIT;
   static bool on = false;
+
+  //Unstatic Variables
   int64_t now;
   int64_t deadline;
+  
+  //ESP-NOW for communication
+  esp_now_init();
+
   uint64_t gpio_mask = STATE_BTN_GPIO | TEMP_UP_BTN_GPIO | TEMP_DOWN_BTN_GPIO | TEMP_FORMAT_BTN_GPIO;
   esp_deep_sleep_enable_gpio_wakeup(gpio_mask, ESP_GPIO_WAKEUP_GPIO_HIGH);
   deadline = esp_timer_get_time() + (TIME_TILL_SLEEP * 1000000ULL);
+  
+
   for (;;) {
     now = esp_timer_get_time();
     
@@ -70,7 +80,7 @@ void app_main(void)
             break;
         }
       }
-    } 
+    }
 
     if (now > deadline) {
       esp_deep_sleep_start();
