@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include "link.h"
 
+static void espnow_recv_callback(const uint8_t *mac_addr, const uint8_t *data, int len) {
+  //Only act if the even is of espnow
+  
+} 
+
 void init_wifi(void) {
   esp_event_loop_create_default();
 
@@ -20,4 +25,6 @@ void init_link(void)
 
   espnow_config_t espnow_config = ESPNOW_INIT_CONFIG_DEFAULT();
   espnow_init(&espnow_config);
+
+  esp_now_register_recv_cb(espnow_recv_callback); //main device only recieves, no need to register a sender callback
 }
