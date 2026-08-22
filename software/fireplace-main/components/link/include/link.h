@@ -9,6 +9,11 @@
 #include "esp_wifi.h"
 #include "config.h"
 
+const uint8_t sens_mac_addr[ESP_NOW_ETH_ALEN];
+const uint8_t remote_mac_addr[ESP_NOW_ETH_ALEN];
+const uint8_t controller_mac_addr[ESP_NOW_ETH_ALEN];
+
+
 typedef struct {
   uint8_t type;                           //Broadcast or unicast ESPNOW data.
   uint8_t state;                          //Indicate that if has received broadcast ESPNOW data or not.
@@ -83,7 +88,7 @@ typedef enum {
 
 
 void init_link(void);
-
+void task_espnow_recv(void);
 
 
 #endif //LINK_H

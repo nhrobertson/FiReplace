@@ -2,6 +2,11 @@
 
 static QueueHandle_t s_espnow_queue = NULL;
 
+const uint8_t sens_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+const uint8_t remote_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+const uint8_t controller_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+
+
 static void espnow_recv_callback(const esp_now_recv_info_t *recv_info, const uint8_t *data, int len) {
   //Only act if the even is of espnow
   espnow_event_t event;
@@ -42,6 +47,46 @@ static void espnow_send_callback(const esp_now_send_info_t *tx_info, esp_now_sen
 
 }
 
+void link_peer(uint8_t *mac_addr) {
+  esp_now_peer_info_t peer = malloc(sizeof(esp_now_send_info_t));
+  if (peer == NULL) {
+    //error
+
+  }
+  memset(peer, 0, sizeof(esp_now_peer_info_t));
+  peer->info = CONFIG_ESPNOW_CHANNEL;
+  peer->ifidx = ESPNOW_WIFI_IF;
+  peer->encrypt = false;
+  memcpy(peer->peer_addr, mac_addr, ESP_NOW_ETH_ALEN);
+  esp_now_add_peer(peer);
+  free(peer);
+}
+
+fireplace_espnow_send_param_t* install_send_parameters(uint8_t *broadcaster_mac_addr) {
+  fireplace_espnow_send_param_t *send_param;
+
+  send_param = malloc(sizeof(fireplace_espnow_send_param_t));
+  if (send_param == NULL) {
+    //Error;
+  }
+  memset(send_param, 0, sizeof(fireplace_espnow_send_param_t));
+  send_param->unicast = false;
+  send_param->broadcase = true;
+  send_param->state = 0;
+  send_param->magic = esp_random();
+  send_param->count = CONFIG_ESPNOW_SEND_COUNT;
+  send_param->delay = CONFIG_ESPNOW_SEND_DELAY;
+  send_param->len   = CONFIG_ESPNOW_SEND_LEN;
+  send_param->buffer = malloc(CONFIG_ESPNOW_SEND_LEN);
+  if (send_param->buffer == NULL) {
+    //Error;
+    free(send_param);
+  }
+  memcpy(send_param->dest_mac, broadcaster_mac_addr, ESP_NOW_ETH_ALEN);
+
+  return(send_param);
+}
+
 void init_wifi(void) {
   esp_event_loop_create_default();
 
@@ -68,11 +113,16 @@ void init_link(void)
   espnow_config_t espnow_config = ESPNOW_INIT_CONFIG_DEFAULT();
   espnow_init(&espnow_config);
 
-#if FIREPLACE_SENDER_DEV
-  esp_now_register_send_cb(espnow_send_callback);
-#endif
 
 #if FIREPLACE_RECIEVER_DEV
   esp_now_register_recv_cb(espnow_recv_callback); //main device only recieves, no need to register a sender callback
 #endif
+
+#if FIREPLACE_SENDER_DEV
+  esp_now_register_send_cb(espnow_send_callback);
+#endif
+}
+
+void task_espnow_recv(void) {
+
 }
