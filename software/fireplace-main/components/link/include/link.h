@@ -2,6 +2,7 @@
 #define LINK_H
 
 #include <stdio.h>
+#include <bool.h>
 
 #include "espnow.h"
 #include "espnow_storage.h"
@@ -9,9 +10,8 @@
 #include "esp_wifi.h"
 #include "config.h"
 
-const uint8_t sens_mac_addr[ESP_NOW_ETH_ALEN];
-const uint8_t remote_mac_addr[ESP_NOW_ETH_ALEN];
-const uint8_t controller_mac_addr[ESP_NOW_ETH_ALEN];
+//Largely taken/influenced by: https://github.com/espressif/esp-idf/blob/master/examples/wifi/espnow/main/espnow_example_main.c
+
 
 
 typedef struct {
@@ -37,23 +37,6 @@ typedef struct {
 } fireplace_espnow_send_param_t;
 
 
-//Payloads come from the Remote and Sensor-
-//Remote transmits command for I/O output, aswell as setting a temperature threshold
-//Sensor transmits temp and humidity - originally floats
-typedef struct payload {
-  uint8_t dev_id; //<-- Needs to be valid for the FIREPLACE_DEV enum. 
-  union {
-    struct remote {
-      uint8_t status;
-      uint8_t temp_threshold;
-    } remote_payload_t;
-    struct sensor {
-      uint8_t temperature; //Need to clamp the temperature to a uint8_t 0-255 decode, maybe use celsius internally?
-      uint8_t humidity;    //Probably won't be using this
-    } sensor_payload_t;
-  } payload_u;
-} __attribute__((packed)) fireplace_payload_t; //Forcefully ensure no padding
-
 typedef enum event_id {
   ESPNOW_RECV_CB,
   ESPNOW_SEND_CB
@@ -77,14 +60,9 @@ typedef union event_info {
 
 typedef struct event_struct {
   espnow_event_type_id_t id;
-  espnow_event_tyoe_info_t info;
+  espnow_event_type_info_t info;
 } espnow_event_t
 
-typedef enum {
-  FIREPLACE_DEV_REMOTE,
-  FIREPLACE_DEV_SENSOR,
-  FIREPLACE_DEV_MAIN
-} FIREPLACE_DEV;
 
 
 void init_link(void);

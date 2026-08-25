@@ -2,11 +2,6 @@
 
 static QueueHandle_t s_espnow_queue = NULL;
 
-const uint8_t sens_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-const uint8_t remote_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-const uint8_t controller_mac_addr[ESP_NOW_ETH_ALEN] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
-
-
 static void espnow_recv_callback(const esp_now_recv_info_t *recv_info, const uint8_t *data, int len) {
   //Only act if the even is of espnow
   espnow_event_t event;
@@ -51,7 +46,6 @@ void link_peer(uint8_t *mac_addr) {
   esp_now_peer_info_t peer = malloc(sizeof(esp_now_send_info_t));
   if (peer == NULL) {
     //error
-
   }
   memset(peer, 0, sizeof(esp_now_peer_info_t));
   peer->info = CONFIG_ESPNOW_CHANNEL;
@@ -121,8 +115,59 @@ void init_link(void)
 #if FIREPLACE_SENDER_DEV
   esp_now_register_send_cb(espnow_send_callback);
 #endif
+
+#if CONFIG_ESPNOW_ENABLE_POWER_SAVE
+  ESP_ERROR_CHECK( esp_now_set_wake_window(CONFIG_ESPNOW_WAKE_WINDOW) );
+  ESP_ERROR_CHECK( esp_wifi_connectionless_module_set_wake_interval(CONFIG_ESPNOW_WAKE_INTERVAL) );
+#endif
 }
 
-void task_espnow_recv(void) {
+void task_espnow(void *pvParameter) {
+  espnow_event_t event;
+  uint8_t recv_state = 0;
+  uint16_t recv_seq = 0;
+  uint32_t recv_magic = 0;
+  bool is_broadcast = false;
+  int ret;
 
+  vTaskDelay(5000 / portTICK_PERIOD_MS);
+
+  while(xQueueRecieve(s_espnow_queue, &event, portMAX_DELAY) == pdTRUE) {
+    switch(event.id) {
+      case ESPNOW_RECV_CB:
+#if FIREPLACE_RECIEVER_DEV
+        uint8_t *recv_data = event->info.recv_cb.data;
+        handle_data(recv_data); //Device Specific, include from an intermediatery spot
+        break;
+#else
+        //If it is not a reciever device and recieved a packet, ignore
+        break;
+#endif
+      case ESPNOW_SEND_CB:
+#if FIREPLACE_SENDER_DEV
+        //Acknowledges that the data has been recieved, if needed, send more data.
+        
+        //Example handling broadcast vs unicast
+        espnow_send_cb_t *send_cb = &event.info.send_cb;
+        is_broadcast = IS_BROADCAST_ADDR(send_cb->mac_addr);
+
+        if (is_broadcast && (send_param->broadcast == false)) {
+          //Was a broadcast message, no need to 
+          break;
+        }
+
+        if (!is_broadcast) {
+          send_param->count--;
+          if (send_param->count == 0) {
+            ESP_LOGI(TAG, "Send done");
+            example_espnow_deinit(send_param);
+            vTaskDelete(NULL);
+          }
+        }
+        break;
+#else
+        break;
+#endif
+    }
+  }
 }
