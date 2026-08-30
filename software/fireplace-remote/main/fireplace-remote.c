@@ -8,6 +8,9 @@
 #include "esp_timer.h"
 #include "esp_now.h"
 #include "io.h"
+#include "nvs_flash.h"
+
+#include "link.h"
 
 #define STATE_BTN_GPIO        GPIO_NUM_0
 #define TEMP_UP_BTN_GPIO      GPIO_NUM_1
@@ -32,17 +35,36 @@ enum TEMP_FORMAT {
 
 void app_main(void)
 {
+  esp_err_t err; 
+  err = nvs_flash_init();
+  if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    ESP_ERROR_CHECK(nvs_flash_erase());
+    err = nvs_flash_init();
+  }
+
+  nvs_handle nvs;
+
+  err = nvs_open("storage", NVS_READWRITE, &nvs);
+
   //Static Variables
-  static int set_temp = 72; //Farenheit default
-  static enum TEMP_FORMAT temp_format = FARENHEIT;
-  static bool on = false;
+  int32_t set_temp = 0; //Farenheit default
+  nvs_get_i32(nvs, "set_temp", &set_temp);
+
+  int32_t temp_format = 0;
+  nvs_get_i32(nvs, "temp_format", &temp_format);
+  enum TEMP_FORMAT e_temp_format = (enum TEMP_FORMAT)temp_format;
+  
+  int32_t on_cmd = 0;
+  nvs_get_i32(nvs, "on_cmd", &on_cmd);
+  
+  bool on = on_cmd ? true : false;
 
   //Unstatic Variables
   int64_t now;
   int64_t deadline;
   
   //ESP-NOW for communication
-  esp_now_init();
+  init_link();
 
   uint64_t gpio_mask = STATE_BTN_GPIO | TEMP_UP_BTN_GPIO | TEMP_DOWN_BTN_GPIO | TEMP_FORMAT_BTN_GPIO;
   esp_deep_sleep_enable_gpio_wakeup(gpio_mask, ESP_GPIO_WAKEUP_GPIO_HIGH);
@@ -79,10 +101,23 @@ void app_main(void)
           default:
             break;
         }
+        deadline += (TIME_TILL_SLEEP * 1000000ULL);
+
+        fireplace_payload_t payload = {0};
+        payload.dev_id = FIREPLACE_DEV_REMOTE;
+        on_cmd = on ? 1 : 0;
+        payload.payload_u.remote.status = on_cmd;
+        payload.payload_u.remote.temp_threshold = set_temp;
+
+        esp_now_send(controller_mac_addr, (uint8_t *)&payload, sizeof(payload));
       }
     }
 
     if (now > deadline) {
+      nvs_set_i32(nvs, "set_temp", set_temp);
+      nvs_set_i32(nvs, "temp_format", temp_format);
+      nvs_set_i32(nvs, "on_cmd", on_cmd);
+      nvs_commit(nvs);
       esp_deep_sleep_start();
     }
     vTaskDelay(pdMS_TO_TICKS(1));

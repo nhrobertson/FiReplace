@@ -4,6 +4,7 @@
 
 
 #include "esp_now.h"
+#include "freertos/FreeRTOS.h"
 
 #ifndef FIREPLACE_CONFIG_H
 #define FIREPLACE_CONFIG_H
@@ -12,6 +13,8 @@
 
 #define FIREPLACE_SENDER_DEV        0
 #define FIREPLACE_RECIEVER_DEV      1
+
+#define TEMP_CHANGE_THRESHOLD       20
 
 //Include this file in all devices
 
@@ -27,6 +30,8 @@ extern const uint8_t sens_mac_addr[ESP_NOW_ETH_ALEN];
 extern const uint8_t remote_mac_addr[ESP_NOW_ETH_ALEN];
 extern const uint8_t controller_mac_addr[ESP_NOW_ETH_ALEN];
 
+#define TEMP_DATA_RECVD BIT0
+extern EventGroupHandle_t g_events;
 
 //Align with CONFIG ID
 typedef enum {

@@ -4,6 +4,7 @@
 
 bool override = false;
 bool state = false;
+float old_temp = 0;
 
 void task_check_heat(void *args) {
   for(;;) {
@@ -27,8 +28,21 @@ void task_drive_output(void *args) {
   }
 }
 
+void task_eval_temp(void *args) {
+  
+  for (;;) {
+    xEventGroupWaitBits(g_events, TEMP_DATA_RECVD, true, true, portMAX_DELAY);
+    ESP_LOGI("TASK EVAL TEMP", "EVENTGROUP DATA RECVD");
+    
+    
+
+  }
+}
+
 void init_tasks(void)
 {
+  g_events = xEventGroupCreate(); 
+
   xTaskCreate(task_check_heat, "heat", 4096, NULL, 6, NULL);
   
   ESP_LOGI("TASKS", "Installed task_check_heat");
@@ -40,4 +54,6 @@ void init_tasks(void)
 
   xTaskCreate(task_espnow_recv, "espnow_handler", 4096, NULL, 1, NULL);
   ESP_LOGI("TASKS", "Installed task_espnow_recv");
+
+  xTaskCreate(task_eval_temp, "eval_temp", 2048, NULL, 3, NULL);
 }

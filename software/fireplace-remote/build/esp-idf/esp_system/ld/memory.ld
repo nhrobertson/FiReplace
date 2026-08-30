@@ -12,7 +12,7 @@
  */
 /*
  * Automatically generated file. DO NOT EDIT.
- * Espressif IoT Development Framework (ESP-IDF) 5.5.3 Configuration Header
+ * Espressif IoT Development Framework (ESP-IDF) 5.5.5 Configuration Header
  */
        
 /* List of deprecated options */
@@ -33,9 +33,10 @@
 /* Memory alignment size for PMS */
     /* rtc timer data (s_rtc_timer_retain_mem, see esp_clk.c files). For rtc_timer_data_in_rtc_mem section. */
 /**
- * physical memory is mapped twice to the vritual address (IRAM and DRAM).
+ * physical memory is mapped twice to the virtual address (IRAM and DRAM).
  * `I_D_SRAM_OFFSET` is the offset between the two locations of the same physical memory
  */
+_iram_dram_shared = 1;
 MEMORY
 {
   /**
@@ -77,19 +78,17 @@ MEMORY
 }
 /* Heap ends at top of dram0_0_seg */
 _heap_end = 0x40000000;
-_data_seg_org = ORIGIN(rtc_data_seg);
 /**
  *  The lines below define location alias for .rtc.data section
  *  As C3 only has RTC fast memory, this is not configurable like on other targets
  */
+REGION_ALIAS("rtc_text_seg", rtc_iram_seg);
 REGION_ALIAS("rtc_data_seg", rtc_iram_seg );
 REGION_ALIAS("rtc_slow_seg", rtc_iram_seg );
-REGION_ALIAS("rtc_data_location", rtc_iram_seg );
-  REGION_ALIAS("default_code_seg", iram0_2_seg);
-  REGION_ALIAS("default_rodata_seg", drom0_0_seg);
-/**
- *  If rodata default segment is placed in `drom0_0_seg`, then flash's first rodata section must
- *  also be first in the segment.
- */
-  ASSERT(_flash_rodata_dummy_start == ORIGIN(default_rodata_seg),
-         ".flash_rodata_dummy section must be placed at the beginning of the rodata segment.")
+REGION_ALIAS("rtc_force_fast_seg", rtc_iram_seg);
+REGION_ALIAS("rtc_force_slow_seg", rtc_iram_seg);
+REGION_ALIAS("iram_text_seg", iram0_0_seg);
+REGION_ALIAS("dram_seg", dram0_0_seg);
+  REGION_ALIAS("flash_text_seg", iram0_2_seg);
+  REGION_ALIAS("flash_rodata_seg", drom0_0_seg);
+ALIGN_VECTOR_TABLE = 0x100;

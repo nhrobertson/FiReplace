@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "/home/nhrob/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "/home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		}
 	],
 	"target" : 

@@ -152,9 +152,11 @@ $<TARGET_FILE:idf::spiffs>
 $<TARGET_FILE:idf::wifi_provisioning>
 $<TARGET_FILE:__idf_json>
 $<TARGET_FILE:idf::espressif__ssd1306>
+$<TARGET_FILE:idf::config>
+$<TARGET_FILE:__idf_link>
+$<TARGET_FILE:__idf_config>
 $<TARGET_FILE:idf::link>
 $<TARGET_FILE:idf::io>
 $<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_espressif__ssd1306>
-$<TARGET_FILE:__idf_link>
 $<TARGET_FILE:__idf_io>

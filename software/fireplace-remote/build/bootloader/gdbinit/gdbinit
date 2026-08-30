@@ -1,2 +1,2 @@
-source /home/nhrob/FiReplace/software/fireplace-remote/build/bootloader/gdbinit/symbols
-source /home/nhrob/FiReplace/software/fireplace-remote/build/bootloader/gdbinit/connect
+source /home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader/gdbinit/symbols
+source /home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/bootloader/gdbinit/connect

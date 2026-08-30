@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "fireplace-sensor",
-    "project_version":    "0e14fdd-dirty",
+    "project_version":    "527f669-dirty",
     "project_path":       "/home/nhrobertson/repos/FiReplace/software/fireplace-sensor",
     "idf_path":           "/home/nhrobertson/esp/esp-idf",
     "build_dir":          "/home/nhrobertson/repos/FiReplace/software/fireplace-sensor/build",

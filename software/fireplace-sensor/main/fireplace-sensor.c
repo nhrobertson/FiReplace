@@ -36,7 +36,7 @@ void app_main(void)
 
   //ESP_ERROR_CHECK(sht4x_init(&sht40));
   
-  //ESP_ERROR_CHECK(esp_sleep_enable_timer_wakeup(SLEEP_TIME * 1000000ULL));
+  ESP_ERROR_CHECK(esp_sleep_enable_timer_wakeup(SLEEP_TIME * 1000000ULL));
   
   uint8_t mac[ESP_NOW_ETH_ALEN];
   esp_err_t ret = esp_read_mac(mac, ESP_MAC_WIFI_STA);

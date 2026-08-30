@@ -1,4 +1,4 @@
-/* * Data converted from /home/nhrob/FiReplace/software/fireplace-remote/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from /home/nhrobertson/repos/FiReplace/software/fireplace-remote/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)
