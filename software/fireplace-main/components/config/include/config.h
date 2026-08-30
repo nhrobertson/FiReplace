@@ -1,3 +1,10 @@
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+#include "esp_now.h"
+
 #ifndef FIREPLACE_CONFIG_H
 #define FIREPLACE_CONFIG_H
 
@@ -37,11 +44,11 @@ typedef struct payload {
     struct remote {
       uint8_t status; // 0, off, 1, on
       uint8_t temp_threshold;
-    } remote_payload_t;
+    } remote;
     struct sensor {
       uint8_t temperature; //Need to clamp the temperature to a uint8_t 0-255 decode, maybe use celsius internally?
       uint8_t humidity;    //Probably won't be using this
-    } sensor_payload_t;
+    } sensor;
   } payload_u;
 } __attribute__((packed)) fireplace_payload_t; //Forcefully ensure no padding
 

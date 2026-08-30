@@ -873,6 +873,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_CPU_MISALIGNED_ACCESS_ON_PMP_MISMATCH_ISSUE",
+        "name": "SOC_CPU_MISALIGNED_ACCESS_ON_PMP_MISMATCH_ISSUE",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_DS_SIGNATURE_MAX_BIT_LEN",
         "name": "SOC_DS_SIGNATURE_MAX_BIT_LEN",
         "range": null,
@@ -1623,6 +1633,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_RTC_CNTL_NEEDS_ATOMIC_ACCESS",
+        "name": "SOC_RTC_CNTL_NEEDS_ATOMIC_ACCESS",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_SLEEP_SYSTIMER_STALL_WORKAROUND",
         "name": "SOC_SLEEP_SYSTIMER_STALL_WORKAROUND",
         "range": null,
@@ -2033,41 +2053,11 @@
         "children": [],
         "depends_on": null,
         "help": null,
-        "id": "SOC_MEMSPI_SRC_FREQ_80M_SUPPORTED",
-        "name": "SOC_MEMSPI_SRC_FREQ_80M_SUPPORTED",
+        "id": "SOC_MEMSPI_ENCRYPTION_ALIGNMENT",
+        "name": "SOC_MEMSPI_ENCRYPTION_ALIGNMENT",
         "range": null,
         "title": null,
-        "type": "bool"
-    },
-    {
-        "children": [],
-        "depends_on": null,
-        "help": null,
-        "id": "SOC_MEMSPI_SRC_FREQ_40M_SUPPORTED",
-        "name": "SOC_MEMSPI_SRC_FREQ_40M_SUPPORTED",
-        "range": null,
-        "title": null,
-        "type": "bool"
-    },
-    {
-        "children": [],
-        "depends_on": null,
-        "help": null,
-        "id": "SOC_MEMSPI_SRC_FREQ_26M_SUPPORTED",
-        "name": "SOC_MEMSPI_SRC_FREQ_26M_SUPPORTED",
-        "range": null,
-        "title": null,
-        "type": "bool"
-    },
-    {
-        "children": [],
-        "depends_on": null,
-        "help": null,
-        "id": "SOC_MEMSPI_SRC_FREQ_20M_SUPPORTED",
-        "name": "SOC_MEMSPI_SRC_FREQ_20M_SUPPORTED",
-        "range": null,
-        "title": null,
-        "type": "bool"
+        "type": "int"
     },
     {
         "children": [],
@@ -3399,7 +3389,7 @@
                                     {
                                         "children": [],
                                         "depends_on": "BOOTLOADER_APP_ANTI_ROLLBACK",
-                                        "help": "The size of the efuse secure version field.\nIts length is limited to 32 bits for ESP32 and 16 bits for ESP32-S2.\nThis determines how many times the security version can be increased.",
+                                        "help": "The size of the efuse secure version field.\nIts length is limited to 32 bits for ESP32, 4 bits for ESP32-C2,\n9 bits for ESP32-C5, and 16 bits for other targets.\nThis determines how many times the security version can be increased.",
                                         "id": "BOOTLOADER_APP_SEC_VER_SIZE_EFUSE_FIELD",
                                         "name": "BOOTLOADER_APP_SEC_VER_SIZE_EFUSE_FIELD",
                                         "range": null,
@@ -4249,6 +4239,16 @@
             },
             {
                 "children": [],
+                "depends_on": null,
+                "help": null,
+                "id": "SECURE_BOOT_V2_ECDSA_INSECURE",
+                "name": "SECURE_BOOT_V2_ECDSA_INSECURE",
+                "range": null,
+                "title": null,
+                "type": "bool"
+            },
+            {
+                "children": [],
                 "depends_on": "SOC_SECURE_BOOT_V1",
                 "help": null,
                 "id": "SECURE_BOOT_V1_SUPPORTED",
@@ -4331,7 +4331,7 @@
                     },
                     {
                         "children": [],
-                        "depends_on": "SECURE_BOOT_V2_ECC_SUPPORTED && (SECURE_SIGNED_APPS_NO_SECURE_BOOT || SECURE_BOOT_V2_ENABLED) && <choice SECURE_SIGNED_APPS_SCHEME>",
+                        "depends_on": "SECURE_BOOT_V2_ECC_SUPPORTED && (SECURE_SIGNED_APPS_NO_SECURE_BOOT || SECURE_BOOT_V2_ENABLED) && (!SECURE_BOOT_V2_ENABLED || !SECURE_BOOT_V2_ECDSA_INSECURE || SECURE_BOOT_V2_FORCE_ENABLE_ECDSA) && <choice SECURE_SIGNED_APPS_SCHEME>",
                         "help": "For Secure boot V2 (e.g., ESP32-C2 SoC), appends ECDSA based signature block to the application.\nRefer to documentation before enabling.",
                         "id": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME",
                         "name": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME",
@@ -4371,7 +4371,7 @@
                     },
                     {
                         "children": [],
-                        "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME && SOC_ECDSA_SUPPORT_CURVE_P384 && <choice SECURE_BOOT_ECDSA_KEY_LEN_SIZE>",
+                        "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME && SOC_ECDSA_SUPPORT_CURVE_P384 && !ESP32P4_SELECTS_REV_LESS_V3 && <choice SECURE_BOOT_ECDSA_KEY_LEN_SIZE>",
                         "help": null,
                         "id": "SECURE_BOOT_ECDSA_KEY_LEN_384_BITS",
                         "name": "SECURE_BOOT_ECDSA_KEY_LEN_384_BITS",
@@ -4483,7 +4483,7 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_BOOT_BUILD_SIGNED_BINARIES",
-                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2.\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure.py generate_signing_key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
+                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2 (RSA scheme).\nKey file is an ECDSA private key (NIST 192p, 256p or 384p) in PEM format for Secure Boot V2 (ECDSA scheme).\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure.py generate_signing_key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
                         "id": "SECURE_BOOT_SIGNING_KEY",
                         "name": "SECURE_BOOT_SIGNING_KEY",
                         "range": null,
@@ -4674,6 +4674,16 @@
                 "children": [
                     {
                         "children": [],
+                        "depends_on": "SECURE_BOOT_INSECURE && SECURE_BOOT_V2_ECDSA_INSECURE",
+                        "help": "ECDSA based Secure Boot V2 is not functional for certain input vectors on this SoC\nand is therefore not offered by default. Refer to the hardware errata document for\ndetails.\n\nSetting this option re-enables the ECDSA based Secure Boot V2 signing scheme despite\nthe known vulnerability. Only set this option if you fully understand the risk. RSA\nbased Secure Boot V2 is the recommended scheme on SoCs that support it.",
+                        "id": "SECURE_BOOT_V2_FORCE_ENABLE_ECDSA",
+                        "name": "SECURE_BOOT_V2_FORCE_ENABLE_ECDSA",
+                        "range": null,
+                        "title": "Force enable ECDSA based Secure Boot V2",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
                         "depends_on": "(SECURE_BOOT_INSECURE || SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT) && IDF_TARGET_ESP32",
                         "help": "By default, the BASIC ROM Console starts on reset if no valid bootloader is\nread from the flash.\n\nWhen either flash encryption or secure boot are enabled, the default is to\ndisable this BASIC fallback mode permanently via eFuse.\n\nIf this option is set, this eFuse is not burned and the BASIC ROM Console may\nremain accessible.  Only set this option in testing environments.",
                         "id": "SECURE_BOOT_ALLOW_ROM_BASIC",
@@ -4705,7 +4715,7 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_BOOT_INSECURE && SOC_EFUSE_REVOKE_BOOT_KEY_DIGESTS",
-                        "help": "If not set (default), during startup in the app all unused digest slots will be revoked.\nTo revoke unused slot will be called esp_efuse_set_digest_revoke(num_digest) for each digest.\nRevoking unused digest slots makes ensures that no trusted keys can be added later by an attacker.\nIf set, it means that you have a plan to use unused digests slots later.\n\nNote that if you plan to enable secure boot during the first boot up, the bootloader will intentionally\nrevoke the unused digest slots while enabling secure boot, even if the above config is enabled because\nkeeping the unused key slots un-revoked would a security hazard.\nIn case for any development workflow if you need to avoid this revocation, you should enable\nsecure boot externally (host based mechanism) rather than enabling it during the boot up,\nso that the bootloader would not need to enable secure boot and thus you could avoid its revocation\nstrategy.",
+                        "help": "If not set (default), during startup in the app all unused digest slots will be revoked.\nTo revoke unused slot will be called esp_efuse_set_digest_revoke(num_digest) for each digest.\nRevoking unused digest slots makes ensures that no trusted keys can be added later by an attacker.\nIf set, it means that you have a plan to use unused digests slots later.\n\nThis config is honored both at runtime in the app and while enabling secure boot during the first\nboot up in the bootloader. When set, the unused digest slots are left un-revoked in both cases.",
                         "id": "SECURE_BOOT_ALLOW_UNUSED_DIGEST_SLOTS",
                         "name": "SECURE_BOOT_ALLOW_UNUSED_DIGEST_SLOTS",
                         "range": null,
@@ -4841,7 +4851,7 @@
                         "type": "choice"
                     }
                 ],
-                "depends_on": "SECURE_FLASH_ENC_ENABLED && SOC_FLASH_ENCRYPTION_XTS_AES_SUPPORT_PSEUDO_ROUND",
+                "depends_on": "SECURE_FLASH_ENC_ENABLED && SOC_FLASH_ENCRYPTION_XTS_AES_SUPPORT_PSEUDO_ROUND && !ESP32P4_SELECTS_REV_LESS_V3",
                 "help": "If set (default), the bootloader will permanently enable the XTS-AES peripheral's pseudo rounds function.\nNote: Enabling this config would burn an efuse.",
                 "id": "SECURE_FLASH_PSEUDO_ROUND_FUNC",
                 "name": "SECURE_FLASH_PSEUDO_ROUND_FUNC",
@@ -8889,11 +8899,11 @@
                             {
                                 "children": [],
                                 "depends_on": "!FREERTOS_SMP",
-                                "help": "If enabled, assert that when a mutex semaphore is given, the task giving the semaphore is the task\nwhich is currently holding the mutex.",
+                                "help": null,
                                 "id": "FREERTOS_CHECK_MUTEX_GIVEN_BY_OWNER",
                                 "name": "FREERTOS_CHECK_MUTEX_GIVEN_BY_OWNER",
                                 "range": null,
-                                "title": "Check that mutex semaphore is given by owner task",
+                                "title": null,
                                 "type": "bool"
                             },
                             {
@@ -9877,12 +9887,12 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "!IDF_TOOLCHAIN_CLANG && IDF_EXPERIMENTAL_FEATURES && <choice LIBC>",
+                                "depends_on": "!IDF_TOOLCHAIN_CLANG && <choice LIBC>",
                                 "help": null,
                                 "id": "LIBC_PICOLIBC",
                                 "name": "LIBC_PICOLIBC",
                                 "range": null,
-                                "title": "Picolibc (EXPERIMENTAL)",
+                                "title": "Picolibc",
                                 "type": "bool"
                             }
                         ],
@@ -9892,6 +9902,16 @@
                         "name": "LIBC",
                         "title": "LibC to build application with",
                         "type": "choice"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "LIBC_PICOLIBC",
+                        "help": "This option provides limited compatibility with libraries built using Newlib headers by:\n\nEnabling hidden system-header inclusions that exist in Newlib.\nAdding tls_stdio, tls_stdout, and tls_stderr variables to Thread Local Storage\nto allow prebuilt libraries to access them via getreent().\nProviding an implementation of getreent() that returns the value of the thread-pointer register.\n\nLimitations:\n\n1. If your application or an external prebuilt library accesses Newlib \"struct _reent\" implicitly,\nthis may cause memory corruption on the task stack. You have two options:\n\n- Use libc API calls instead of directly accessing \"struct _reent\" fields.\n- Switch ESP-IDF to use the Newlib implementation by setting CONFIG_LIBC_NEWLIB=y in sdkconfig.\n\n2. If your application uses a prebuilt library built with Newlib headers, you may encounter\nunexpected behavior when overriding stdin, stdout, and stderr. External prebuilt libraries\ncan only read these streams, so overriding them will not affect as it was for Newlib.\nYou have two options to fix this:\n\n- Rebuild the library with Picolibc headers that follow POSIX-standardized stdin, stdout,\n  and stderr declarations.\n- Switch ESP-IDF to use the Newlib implementation by setting CONFIG_LIBC_NEWLIB=y in sdkconfig.",
+                        "id": "LIBC_PICOLIBC_NEWLIB_COMPATIBILITY",
+                        "name": "LIBC_PICOLIBC_NEWLIB_COMPATIBILITY",
+                        "range": null,
+                        "title": "Provides limited interoperability with libraries built using Newlib headers",
+                        "type": "bool"
                     },
                     {
                         "children": [],
@@ -9905,7 +9925,7 @@
                     },
                     {
                         "children": [],
-                        "depends_on": "LIBC_NEWLIB",
+                        "depends_on": null,
                         "help": "Enable this option to include be able to call the lock API from\ncode that runs while cache is disabled, e.g. IRAM interrupts.",
                         "id": "LIBC_LOCKS_PLACE_IN_IRAM",
                         "name": "LIBC_LOCKS_PLACE_IN_IRAM",
@@ -10056,12 +10076,25 @@
                     {
                         "children": [],
                         "depends_on": "ESP_ROM_HAS_SUBOPTIMAL_NEWLIB_ON_MISALIGNED_MEMORY",
-                        "help": "Enables performance-optimized implementations of memory and string functions\nwhen handling misaligned memory.\n\nThis increases the image size by ~1000 bytes.\n\nOptimized functions include:\n    - memcpy\n    - memset\n    - memmove\n    - str[n]cpy\n    - str[n]cmp",
+                        "help": "Enables performance-optimized implementations of memory and string functions\nwhen handling misaligned memory.\n\nRequire approximately 800\u20131000 bytes of IRAM.\n\nOptimized functions include:\n    - memcpy\n    - memset\n    - memmove\n    - str[n]cpy\n    - str[n]cmp",
                         "id": "LIBC_OPTIMIZED_MISALIGNED_ACCESS",
                         "name": "LIBC_OPTIMIZED_MISALIGNED_ACCESS",
                         "range": null,
                         "title": "Use performance-optimized memXXX/strXXX functions on misaligned memory access",
                         "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Size of the buffer used to format assert failure messages.\n\nWhen assertions fail, the system formats a message containing the function name,\nfile name, line number, and the failed expression. This option controls the\nmaximum length of this message.\n\nIf you encounter truncated assert messages (especially with C++ templates or\nlong function names), increase this value. The default value of 200 bytes\nshould be sufficient for most cases, but complex template expressions may\nrequire larger buffers.",
+                        "id": "LIBC_ASSERT_BUFFER_SIZE",
+                        "name": "LIBC_ASSERT_BUFFER_SIZE",
+                        "range": [
+                            100,
+                            2048
+                        ],
+                        "title": "Assert message buffer size",
+                        "type": "int"
                     }
                 ],
                 "depends_on": null,
@@ -10230,7 +10263,7 @@
                                         "type": "bool"
                                     }
                                 ],
-                                "depends_on": "(IDF_TARGET_ESP32S3 || IDF_TARGET_ESP32P4) && !ESPTOOLPY_OCT_FLASH && !APP_BUILD_TYPE_PURE_RAM_APP",
+                                "depends_on": "SOC_SPI_MEM_FLASH_SUPPORT_HPM && !ESPTOOLPY_OCT_FLASH && !APP_BUILD_TYPE_PURE_RAM_APP",
                                 "help": "Whether the High Performance Mode of Flash is enabled. As an optional feature, user needs to manually\nenable this option as a confirmation. To be back-compatible with earlier IDF version, this option is\nautomatically enabled with warning when Flash running > 80Mhz.",
                                 "id": "component-config-main-flash-configuration-optional-and-experimental-features-read-docs-first--high-performance-mode-read-docs-first-80mhz-",
                                 "name": "SPI_FLASH_HPM",
@@ -10772,7 +10805,7 @@
     {
         "children": [],
         "depends_on": null,
-        "help": "By enabling this option, ESP-IDF experimental feature options will be visible.\n\nNote you should still enable a certain experimental feature option to use it, and you\nshould read the corresponding risk warning and known issue list carefully.\n\nCurrent experimental feature list:\n\n- CONFIG_ESPTOOLPY_FLASHFREQ_120M && CONFIG_ESPTOOLPY_FLASH_SAMPLE_MODE_DTR\n- CONFIG_SPIRAM_SPEED_120M && CONFIG_SPIRAM_MODE_OCT\n- CONFIG_BOOTLOADER_CACHE_32BIT_ADDR_QUAD_FLASH\n- CONFIG_ESP_WIFI_EAP_TLS1_3\n- CONFIG_ESP_WIFI_ENABLE_ROAMING_APP\n- CONFIG_USB_HOST_EXT_PORT_RESET_ATTEMPTS\n- CONFIG_LIBC_PICOLIBC",
+        "help": "By enabling this option, ESP-IDF experimental feature options will be visible.\n\nNote you should still enable a certain experimental feature option to use it, and you\nshould read the corresponding risk warning and known issue list carefully.\n\nCurrent experimental feature list:\n\n- CONFIG_ESPTOOLPY_FLASHFREQ_120M && CONFIG_ESPTOOLPY_FLASH_SAMPLE_MODE_DTR\n- CONFIG_SPIRAM_SPEED_120M && CONFIG_SPIRAM_MODE_OCT\n- CONFIG_BOOTLOADER_CACHE_32BIT_ADDR_QUAD_FLASH\n- CONFIG_ESP_WIFI_EAP_TLS1_3\n- CONFIG_ESP_WIFI_ENABLE_ROAMING_APP\n- CONFIG_USB_HOST_EXT_PORT_RESET_ATTEMPTS",
         "id": "IDF_EXPERIMENTAL_FEATURES",
         "name": "IDF_EXPERIMENTAL_FEATURES",
         "range": null,

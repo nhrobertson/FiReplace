@@ -1,7 +1,9 @@
 #ifndef TASKS_H
 #define TASKS_H
 
-#include "FreeRTOS/FreeRTOS.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
 #include "config.h"
 #include "link.h"
 

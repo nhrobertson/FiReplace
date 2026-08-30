@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tasks.h"
+#include "esp_log.h"
 
 bool override = false;
 bool state = false;
@@ -29,10 +30,14 @@ void task_drive_output(void *args) {
 void init_tasks(void)
 {
   xTaskCreate(task_check_heat, "heat", 4096, NULL, 6, NULL);
+  
+  ESP_LOGI("TASKS", "Installed task_check_heat");
   xTaskCreate(task_drive_output, "output", 4096, NULL, 2, NULL);
+  ESP_LOGI("TASKS", "Installed task_drive_output");
 
   link_peer(sens_mac_addr);
   link_peer(remote_mac_addr);
 
-  xTaskCreate(task_espnow, "espnow_handler", 4096, NULL, 1, NULL);
+  xTaskCreate(task_espnow_recv, "espnow_handler", 4096, NULL, 1, NULL);
+  ESP_LOGI("TASKS", "Installed task_espnow_recv");
 }

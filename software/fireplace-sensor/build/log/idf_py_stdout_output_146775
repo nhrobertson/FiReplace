@@ -1,0 +1,58 @@
+Command: /home/nhrobertson/.espressif/python_env/idf5.5_py3.14_env/bin/python /home/nhrobertson/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix riscv32-esp-elf- --target esp32c3 --revision 3 --decode-panic backtrace /home/nhrobertson/repos/FiReplace/software/fireplace-sensor/build/fireplace-sensor.elf /home/nhrobertson/repos/FiReplace/software/fireplace-sensor/build/bootloader/bootloader.elf -m '/home/nhrobertson/.espressif/python_env/idf5.5_py3.14_env/bin/python' '/home/nhrobertson/esp/esp-idf/tools/idf.py' '-p' '/dev/ttyUSB0'
+ESP-ROM:esp32c3-eco7-20230720
+Build:Jul 20 2023
+rst:0x1 (POWERON),boot:0xc (SPI_FAST_FLASH_BOOT)
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fcd5820,len:0x155c
+load:0x403cbf10,len:0xc84
+load:0x403ce710,len:0x2fac
+entry 0x403cbf1a
+[0;32mI (31) boot: ESP-IDF 1a1a5aa6 2nd stage bootloader[0m
+[0;32mI (31) boot: compile time Aug 29 2026 20:54:34[0m
+[0;32mI (31) boot: chip revision: v1.1[0m
+[0;32mI (31) boot: efuse block revision: v1.3[0m
+[0;32mI (35) boot.esp32c3: SPI Speed      : 80MHz[0m
+[0;32mI (39) boot.esp32c3: SPI Mode       : DIO[0m
+[0;32mI (43) boot.esp32c3: SPI Flash Size : 2MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (51) boot: Partition Table:[0m
+[0;32mI (54) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (60) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (73) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (79) boot: End of partition table[0m
+[0;32mI (83) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=08fa4h ( 36772) map[0m
+[0;32mI (96) esp_image: segment 1: paddr=00018fcc vaddr=3fc8c400 size=0184ch (  6220) load[0m
+[0;32mI (99) esp_image: segment 2: paddr=0001a820 vaddr=40380000 size=057f8h ( 22520) load[0m
+[0;32mI (109) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=14fcch ( 85964) map[0m
+[0;32mI (126) esp_image: segment 4: paddr=00034ff4 vaddr=403857f8 size=06a0ch ( 27148) load[0m
+[0;32mI (131) esp_image: segment 5: paddr=0003ba08 vaddr=50000000 size=0003ch (    60) load[0m
+[0;32mI (136) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (136) boot: Disabling RNG early entropy source...[0m
+[0;32mI (151) cpu_start: Unicore app[0m
+[0;32mI (159) cpu_start: GPIO 20 and 21 are used as console UART I/O pins[0m
+[0;32mI (160) cpu_start: Pro cpu start user code[0m
+[0;32mI (160) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (162) app_init: Application information:[0m
+[0;32mI (165) app_init: Project name:     fireplace-sensor[0m
+[0;32mI (170) app_init: App version:      0e14fdd-dirty[0m
+[0;32mI (175) app_init: Compile time:     Aug 29 2026 20:50:49[0m
+[0;32mI (180) app_init: ELF file SHA256:  4bd7597ba...[0m
+[0;32mI (184) app_init: ESP-IDF:          1a1a5aa6[0m
+[0;32mI (188) efuse_init: Min chip rev:     v0.3[0m
+[0;32mI (192) efuse_init: Max chip rev:     v1.99 [0m
+[0;32mI (196) efuse_init: Chip rev:         v1.1[0m
+[0;32mI (200) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (206) heap_init: At 3FC8EB50 len 000314B0 (197 KiB): RAM[0m
+[0;32mI (211) heap_init: At 3FCC0000 len 0001C710 (113 KiB): Retention RAM[0m
+[0;32mI (217) heap_init: At 3FCDC710 len 0000294C (10 KiB): Retention RAM[0m
+[0;32mI (223) heap_init: At 5000003C len 00001FAC (7 KiB): RTCRAM[0m
+[0;32mI (229) spi_flash: detected chip: generic[0m
+[0;32mI (232) spi_flash: flash io: dio[0m
+[0;33mW (235) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (247) sleep_gpio: Configure to isolate all GPIO pins in sleep state[0m
+[0;32mI (253) sleep_gpio: Enable automatic switching of GPIO sleep configuration[0m
+[0;32mI (260) main_task: Started on CPU0[0m
+[0;32mI (270) main_task: Calling app_main()[0m
+[0;32mI (270) MAC: 8c:fd:49:44:3f:04[0m

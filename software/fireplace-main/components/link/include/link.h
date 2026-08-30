@@ -2,16 +2,33 @@
 #define LINK_H
 
 #include <stdio.h>
-#include <bool.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
-#include "espnow.h"
-#include "espnow_storage.h"
-#include "espnow_utils.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "esp_event.h"
+#include "esp_netif.h"
+#include "esp_mac.h"
+#include "esp_crc.h"
+#include "esp_now.h"
 #include "esp_wifi.h"
+#include "esp_random.h"
 #include "config.h"
 
 //Largely taken/influenced by: https://github.com/espressif/esp-idf/blob/master/examples/wifi/espnow/main/espnow_example_main.c
 
+#if CONFIG_ESPNOW_WIFI_MODE_STATION
+#define ESPNOW_WIFI_MODE WIFI_MODE_STA
+#define ESPNOW_WIFI_IF   WIFI_IF_STA
+#else
+#define ESPNOW_WIFI_MODE WIFI_MODE_AP
+#define ESPNOW_WIFI_IF   WIFI_IF_AP
+#endif
+
+#define ESPNOW_MAXDELAY 512
 
 
 typedef struct {
@@ -61,12 +78,13 @@ typedef union event_info {
 typedef struct event_struct {
   espnow_event_type_id_t id;
   espnow_event_type_info_t info;
-} espnow_event_t
+} espnow_event_t;
 
 
 
 void init_link(void);
-void task_espnow_recv(void);
+void link_peer(uint8_t *mac_addr);
+void task_espnow_recv(void *pvParameter);
 
 
 #endif //LINK_H

@@ -154,7 +154,9 @@ $<TARGET_FILE:__idf_json>
 $<TARGET_FILE:idf::esp-idf-lib__i2cdev>
 $<TARGET_FILE:idf::esp-idf-lib__sht4x>
 $<TARGET_FILE:__idf_esp-idf-lib__i2cdev>
+$<TARGET_FILE:idf::config>
+$<TARGET_FILE:__idf_link>
+$<TARGET_FILE:__idf_config>
 $<TARGET_FILE:idf::link>
 $<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_esp-idf-lib__sht4x>
-$<TARGET_FILE:__idf_link>

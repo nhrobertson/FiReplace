@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "nvs_flash.h"
 #include "link.h"
 #include "tasks.h"
 
@@ -10,9 +11,7 @@ void app_main(void)
     ESP_ERROR_CHECK(nvs_flash_erase());
     err = nvs_flash_init();
   }
-  if (err != ESP_OK) {
-    ESP_LOGE(TAG, "nvs_flash_init failed: %s", esp_err_to_name(err));
-  }
+  ESP_ERROR_CHECK(err);
   init_link();
   init_tasks();
 }

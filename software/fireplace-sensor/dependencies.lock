@@ -68,7 +68,7 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.5.3
+    version: 5.5.5
 direct_dependencies:
 - esp-idf-lib/sht4x
 - idf
