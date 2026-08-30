@@ -35,7 +35,6 @@ void task_eval_temp(void *args) {
     ESP_LOGI("TASK EVAL TEMP", "EVENTGROUP DATA RECVD");
     
     
-
   }
 }
 
