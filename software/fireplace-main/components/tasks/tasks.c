@@ -1,16 +1,38 @@
 #include <stdio.h>
 #include "tasks.h"
+#include "io.h"
 #include "esp_log.h"
+#include "esp_timer.h"
+
+#define SENSOR_TIMEOUT_US ((int64_t)CONFIG_FIREPLACE_SENSOR_TIMEOUT_SECONDS * 1000000)
+#define MAX_ON_US         ((int64_t)CONFIG_FIREPLACE_MAX_ON_SECONDS * 1000000)
 
 bool override = false;
+bool sensor_stale = true;
+bool timed_out = false;
 bool state = false;
 float old_temp = 0;
+int64_t on_since_us = 0;
 
 void task_check_heat(void *args) {
   for(;;) {
+    int64_t now = esp_timer_get_time();
+
+    sensor_stale = last_sensor_us == 0 || now - last_sensor_us > SENSOR_TIMEOUT_US;
+
+    if (!on_cmd_state) {
+      on_since_us = 0;
+      timed_out = false;
+    } else if (on_since_us == 0) {
+      on_since_us = now;
+    } else if (!timed_out && now - on_since_us > MAX_ON_US) {
+      timed_out = true;
+      ESP_LOGW("FAILSAFE", "Max on time reached, forcing off");
+    }
+
     if (current_temp >= temp_set) {
-      override = true;      
-    } else {
+      override = true;
+    } else if (current_temp <= temp_set - CONFIG_FIREPLACE_TEMP_HYSTERESIS) {
       override = false;
     }
     vTaskDelay(pdMS_TO_TICKS(10));
@@ -18,11 +40,16 @@ void task_check_heat(void *args) {
 }
 
 void task_drive_output(void *args) {
-  for(;;) {
-    if (state != on_cmd_state) {
-      //TODO: Drive GPIO output, (I think it needs 6 seconds on, then off)
+  ESP_ERROR_CHECK(init_output());
+  ESP_ERROR_CHECK(pulse_output(false));
+  ESP_LOGI("OUTPUT", "Boot off pulse done");
 
-      state = on_cmd_state;
+  for(;;) {
+    bool target = on_cmd_state && !override && !sensor_stale && !timed_out;
+    if (state != target) {
+      ESP_ERROR_CHECK(pulse_output(target));
+      ESP_LOGI("OUTPUT", "Pulsed %s", target ? "on" : "off");
+      state = target;
     }
     vTaskDelay(pdMS_TO_TICKS(10));
   }

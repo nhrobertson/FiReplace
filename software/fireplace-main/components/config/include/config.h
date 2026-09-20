@@ -68,6 +68,7 @@ extern float temp_set;
 extern float current_temp;
 extern float current_humid;
 extern bool on_cmd_state;
+extern int64_t last_sensor_us;
 
 #elif FIREPLACE_DEV_ID == 1
 

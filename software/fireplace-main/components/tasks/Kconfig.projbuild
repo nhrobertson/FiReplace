@@ -1,0 +1,27 @@
+menu "FiReplace Control Configuration"
+
+    config FIREPLACE_TEMP_HYSTERESIS
+        int "Temperature hysteresis, unit: degrees F"
+        range 0 20
+        default 2
+        help
+            After the set temperature is reached the fireplace stays off until the
+            temperature drops this many degrees below the set temperature.
+
+    config FIREPLACE_SENSOR_TIMEOUT_SECONDS
+        int "Sensor timeout, unit: seconds"
+        range 1 86400
+        default 300
+        help
+            If no sensor reading arrives within this time, or none has arrived since
+            boot, the fireplace is forced off. The sensor reports every 60 seconds.
+
+    config FIREPLACE_MAX_ON_SECONDS
+        int "Maximum on time, unit: seconds"
+        range 60 604800
+        default 21600
+        help
+            The fireplace is forced off this long after the remote turned it on.
+            It stays off until the remote turns it off and on again.
+
+endmenu

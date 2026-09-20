@@ -1,4 +1,4 @@
 idf_component_register(SRCS "config.c"
                     INCLUDE_DIRS "include"
-                    REQUIRES esp_wifi link freertos
+                    REQUIRES esp_wifi esp_timer link freertos
 )

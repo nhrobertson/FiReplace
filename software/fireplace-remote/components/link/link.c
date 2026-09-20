@@ -3,6 +3,7 @@
 #include "esp_log.h"
 
 static QueueHandle_t s_espnow_queue = NULL;
+static SemaphoreHandle_t s_send_done = NULL;
 
 static void espnow_recv_callback(const esp_now_recv_info_t *recv_info, const uint8_t *data, int len) {
   //Only act if the even is of espnow
@@ -32,22 +33,11 @@ static void espnow_recv_callback(const esp_now_recv_info_t *recv_info, const uin
 }
 
 static void espnow_send_callback(const esp_now_send_info_t *tx_info, esp_now_send_status_t status) {
-  espnow_event_t event;
-  espnow_send_cb_t *send_cb = &event.info.send_cb;
+  xSemaphoreGive(s_send_done);
+}
 
-  if(tx_info == NULL) {
-    //Invalid
-    return;
-  }
-
-  event.id = ESPNOW_SEND_CB;
-  memcpy(send_cb->mac_addr, tx_info->des_addr, ESP_NOW_ETH_ALEN);
-
-  send_cb->status = status;
-  if (xQueueSend(s_espnow_queue, &event, ESPNOW_MAXDELAY) != pdTRUE) {
-    //Failure in sending event to the queue
-  }
-
+bool wait_for_send(TickType_t timeout) {
+  return xSemaphoreTake(s_send_done, timeout) == pdTRUE;
 }
 
 void link_peer(uint8_t *mac_addr) {
@@ -105,6 +95,7 @@ void init_link(void)
 {
   init_wifi();
   
+  s_send_done = xSemaphoreCreateBinary();
   s_espnow_queue = xQueueCreate(ESPNOW_QUEUE_SIZE, sizeof(espnow_event_t));
   if (s_espnow_queue == NULL) {
     //queue creation failed

@@ -12,8 +12,8 @@ static void espnow_recv_callback(const esp_now_recv_info_t *recv_info, const uin
   uint8_t *src_mac  = recv_info->src_addr;
   uint8_t *dest_mac = recv_info->des_addr;
 
-  if (src_mac == NULL || data == NULL || len <= 0) {
-    //Inital error
+  if (src_mac == NULL || data == NULL || len < (int)sizeof(fireplace_payload_t)) {
+    return;
   }
  
   event.id = ESPNOW_RECV_CB;
@@ -154,6 +154,7 @@ void task_espnow_recv(void *pvParameter) {
         ESP_LOGI("ESPNOW", "DATA RECIEVED");
         uint8_t *recv_data = event.info.recv_cb.data;
         handle_data(recv_data); //Device Specific, include from an intermediatery spot
+        free(recv_data);
         break;
 #else
         //If it is not a reciever device and recieved a packet, ignore

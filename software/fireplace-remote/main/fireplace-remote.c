@@ -76,7 +76,7 @@ void app_main(void)
   err = nvs_open("storage", NVS_READWRITE, &nvs);
 
   //Static Variables
-  int32_t set_temp = 0; //Farenheit default
+  int32_t set_temp = 72; //Farenheit default
   nvs_get_i32(nvs, "set_temp", &set_temp);
 
   int32_t temp_format = 0;
@@ -95,6 +95,8 @@ void app_main(void)
   //ESP-NOW for communication
   init_link();
 
+  link_peer(controller_mac_addr);
+
   //SSD1306 display
   i2c_config_t i2c_conf = {
     .mode = I2C_MODE_MASTER,
@@ -109,17 +111,30 @@ void app_main(void)
   ssd1306_handle_t oled = ssd1306_create(OLED_I2C_PORT, SSD1306_I2C_ADDRESS);
   update_display(oled, set_temp, (enum TEMP_FORMAT)temp_format, on);
 
-  uint64_t gpio_mask = STATE_BTN_GPIO | TEMP_UP_BTN_GPIO | TEMP_DOWN_BTN_GPIO | TEMP_FORMAT_BTN_GPIO;
+  uint64_t gpio_mask = (1ULL << STATE_BTN_GPIO) | (1ULL << TEMP_UP_BTN_GPIO) | (1ULL << TEMP_DOWN_BTN_GPIO) | (1ULL << TEMP_FORMAT_BTN_GPIO);
+
+  gpio_config_t btn_conf = {
+    .pin_bit_mask = gpio_mask,
+    .mode = GPIO_MODE_INPUT,
+    .pull_up_en = GPIO_PULLUP_DISABLE,
+    .pull_down_en = GPIO_PULLDOWN_ENABLE,
+    .intr_type = GPIO_INTR_DISABLE,
+  };
+  ESP_ERROR_CHECK(gpio_config(&btn_conf));
+
   esp_deep_sleep_enable_gpio_wakeup(gpio_mask, ESP_GPIO_WAKEUP_GPIO_HIGH);
   deadline = esp_timer_get_time() + (TIME_TILL_SLEEP * 1000000ULL);
-  
+
+  int prev_btn_state[NUM_BTNS] = {0};
 
   for (;;) {
     now = esp_timer_get_time();
-    
+
     for (int i = 0; i < NUM_BTNS; ++i) {
       read_input(&btns[i]);
-      if (btns[i].state) {
+      bool rising_edge = btns[i].state && !prev_btn_state[i];
+      prev_btn_state[i] = btns[i].state;
+      if (rising_edge) {
         //Button pressed
         bool display_dirty = false;
         switch (btns[i].GPIO_NUM) {
@@ -173,6 +188,6 @@ void app_main(void)
       nvs_commit(nvs);
       esp_deep_sleep_start();
     }
-    vTaskDelay(pdMS_TO_TICKS(1));
+    vTaskDelay(pdMS_TO_TICKS(10));
   }
 }

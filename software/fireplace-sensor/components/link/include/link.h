@@ -9,6 +9,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+#include "freertos/semphr.h"
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_mac.h"
@@ -85,6 +86,7 @@ typedef struct event_struct {
 
 void init_link(void);
 void link_peer(uint8_t *mac_addr);
+bool wait_for_send(TickType_t timeout);
 void task_espnow_recv(void *pvParameter);
 
 

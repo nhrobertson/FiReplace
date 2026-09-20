@@ -25,5 +25,8 @@ esp_err_t read_gpio(gpio_num_t GPIO_NUM, int *level);
 //Auto uses debounce logic
 esp_err_t read_input(gpio_t *gpio);
 
+esp_err_t init_output(void);
+esp_err_t pulse_output(bool on);
+
 
 #endif //IO_H

@@ -1,0 +1,24 @@
+menu "FiReplace Output Configuration"
+
+    config FIREPLACE_OUT_IN1_GPIO
+        int "H-bridge IN1 GPIO"
+        range 0 48
+        default 4
+        help
+            Driven high (with IN2 low) to pulse the fireplace on.
+
+    config FIREPLACE_OUT_IN2_GPIO
+        int "H-bridge IN2 GPIO"
+        range 0 48
+        default 5
+        help
+            Driven high (with IN1 low) to pulse the fireplace off.
+
+    config FIREPLACE_PULSE_MS
+        int "Output pulse length, unit: ms"
+        range 10 60000
+        default 6000
+        help
+            How long the on or off pulse is held before both outputs are released.
+
+endmenu
